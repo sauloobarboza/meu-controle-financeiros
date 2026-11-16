@@ -175,6 +175,97 @@ button:active{transform:scale(.975)}
 @keyframes soft-rise{from{opacity:0;transform:translateY(7px)}to{opacity:1;transform:translateY(0)}}
 @media(min-width:650px){main{padding-left:18px;padding-right:18px}.card{padding:20px}.top-summary{padding:22px}.month-head{padding:14px}.actions button{font-size:13px}}
 @media(prefers-reduced-motion:reduce){*,*::before,*::after{animation-duration:.01ms!important;transition-duration:.01ms!important;scroll-behavior:auto!important}}
+
+/* === PALETA UNIFICADA: SERVICE MANAGEMENT / NAVY + TEAL === */
+:root{
+ --bg:#f3f7f8;--ink:#172b36;--muted:#667b86;--line:#dce6e9;
+ --card:#ffffff;--soft:#edf3f5;--month:#e6f1f3;--monthline:#cbdfe3;
+ --blue:#087f8c;--green:#087f67;--red:#c44750;
+ --accent:#008c95;--accent-soft:#dff2f1;--shadow:0 10px 28px rgba(24,55,67,.07);
+}
+body:not([data-theme="dark"]){
+ background:linear-gradient(180deg,#eaf1f4 0,#f5f8f9 300px,#f3f7f8 100%);
+ color:var(--ink);
+}
+body[data-theme="dark"]{
+ --bg:#101b27;--ink:#eaf2f4;--muted:#a2b4bc;--line:#2b3d4a;
+ --card:#192936;--soft:#213542;--month:#203945;--monthline:#355563;
+ --blue:#55c6c8;--green:#65d6ae;--red:#ff858b;
+ --accent:#55c6c8;--accent-soft:#1d4147;--shadow:0 12px 32px rgba(0,0,0,.22);
+ background:linear-gradient(180deg,#101b27 0,#111e2b 100%);
+ color:var(--ink);
+}
+body::before{background:radial-gradient(ellipse at 8% 0%,rgba(0,140,149,.08),transparent 36%),radial-gradient(ellipse at 100% 20%,rgba(43,105,130,.06),transparent 32%)}
+body[data-theme="dark"]::before{background:radial-gradient(ellipse at 8% 0%,rgba(45,183,177,.12),transparent 36%),radial-gradient(ellipse at 100% 20%,rgba(43,105,130,.10),transparent 32%)}
+header,body:not([data-theme="dark"]) header,body[data-theme="dark"] header{
+ background:linear-gradient(115deg,#183746 0%,#145967 58%,#087f8c 100%);
+ box-shadow:0 10px 28px rgba(13,65,76,.18);
+}
+body[data-theme="dark"] header{background:linear-gradient(115deg,#142b39 0%,#174653 58%,#126b73 100%)}
+header::after{border-color:rgba(255,255,255,.15);box-shadow:0 0 0 24px rgba(255,255,255,.035),0 0 0 48px rgba(255,255,255,.022)}
+header small{color:rgba(239,250,250,.76)}
+.theme-toggle,.install-button{
+ background:rgba(255,255,255,.13)!important;color:#f4ffff!important;
+ border:1px solid rgba(255,255,255,.22)!important;box-shadow:none!important;
+}
+.card,body:not([data-theme="dark"]) .card,body[data-theme="dark"] .card{
+ background:var(--card);border:1px solid var(--line);box-shadow:var(--shadow);
+}
+.top-summary::before{background:var(--accent-soft)}
+.monthly-metrics>div{background:var(--soft)}
+.month-head,body:not([data-theme="dark"]) .month-head,body[data-theme="dark"] .month-head{
+ background:var(--month);border-color:var(--monthline);
+}
+.month-name,.month-total b,.month-head .month-total b{color:var(--ink)}
+.month-total{color:var(--muted)}
+.month-total input{background:var(--card);border-color:var(--line);color:var(--ink)}
+.wrap,.projection-scroll,body:not([data-theme="dark"]) .wrap,body[data-theme="dark"] .wrap,
+body:not([data-theme="dark"]) .projection-scroll,body[data-theme="dark"] .projection-scroll{
+ background:var(--card);border-color:var(--line);box-shadow:0 4px 16px rgba(18,48,55,.035);
+}
+th,body:not([data-theme="dark"]) th,body[data-theme="dark"] th{background:var(--soft);color:var(--muted)}
+td{border-color:var(--line)}
+td input{color:var(--ink)}
+.initial,body:not([data-theme="dark"]) .initial,body[data-theme="dark"] .initial,
+.projection-total,body:not([data-theme="dark"]) .projection-total,body[data-theme="dark"] .projection-total{background:var(--soft)}
+tr.selected,body:not([data-theme="dark"]) tr.selected,body[data-theme="dark"] tr.selected{
+ background:var(--accent-soft);outline:1px solid rgba(0,140,149,.25);outline-offset:-1px;
+}
+input,select,button{color:var(--ink);border-color:var(--line)}
+input,select{background:var(--card)}
+.filters select,.filters button{background:var(--soft);border-color:var(--line)}
+body[data-theme="dark"] input,body[data-theme="dark"] select,
+body[data-theme="dark"] button:not(.primary){background:var(--soft);color:var(--ink);border-color:var(--line)}
+body[data-theme="dark"] td input{background:transparent}
+body[data-theme="dark"] td input:focus{background:var(--soft)}
+.primary,body[data-theme="dark"] .primary{
+ background:linear-gradient(135deg,#078b91,#08717d);color:#fff;border:0;
+ box-shadow:0 5px 13px rgba(8,127,140,.2);
+}
+.actions button:not(.primary){background:var(--card);color:var(--muted);border-color:var(--line)}
+.search,body:not([data-theme="dark"]) .search,body[data-theme="dark"] .search{
+ background:var(--card);color:var(--ink);border-color:var(--line);
+}
+.search::placeholder{color:var(--muted)}
+.projection button{color:var(--accent)}
+.projection .negative{color:var(--red)}
+.month-warning{background:#fff0e8;color:#a94e28;border-color:#f1d0bf}
+body[data-theme="dark"] .month-warning{background:#49342c;color:#ffc09b;border-color:#76513f}
+.bottom-nav,body[data-theme="dark"] .bottom-nav{
+ background:rgba(255,255,255,.91);border-color:rgba(135,158,165,.28);
+}
+body[data-theme="dark"] .bottom-nav{background:rgba(25,41,54,.94);border-color:#344a58}
+.nav-item{color:var(--muted)}
+.nav-item.active{color:var(--accent);background:var(--accent-soft)}
+body[data-theme="dark"] .nav-item{color:var(--muted)}
+body[data-theme="dark"] .nav-item.active{color:var(--accent)}
+body[data-theme="dark"] dialog{background:var(--card);color:var(--ink);border:1px solid var(--line)}
+body[data-theme="dark"] .month-total input{background:var(--card);color:var(--ink);border-color:var(--line)}
+td input.paid-check{accent-color:#078b78}
+body[data-theme="dark"] td input.paid-check{accent-color:#55c6a9}
+button:focus-visible,input:focus-visible,select:focus-visible{outline:3px solid rgba(0,140,149,.24);outline-offset:2px}
+@media(prefers-reduced-motion:reduce){*,*::before,*::after{animation-duration:.01ms!important;transition-duration:.01ms!important;scroll-behavior:auto!important}}
+
 </style></head><body><header><div class="header-inner"><div><h1>Meu Controle</h1><small>Controle financeiro do seu jeito</small></div><div class="header-tools"><button id="installApp" class="install-button" hidden>＋ Instalar app</button><button id="themeToggle" class="theme-toggle" aria-label="Alternar tema">🌙</button></div></div></header><main>
 <section class="card top-summary"><div class="muted projected-label">Saldo projetado ao fim do mês selecionado</div><div class="balance projected-balance" id="monthBalance">R$ 0,00</div><div class="filters"><select id="monthFilter" aria-label="Filtrar mês"></select><button id="newMonth">＋ Mês</button></div><div class="monthly-metrics"><div><span>Entrada</span><b id="summaryIncome">R$ 0,00</b></div><div><span>Gasto</span><b id="summarySpent">R$ 0,00</b></div><div class="result-metric" id="resultMetric"><span>Lucro</span><b id="summaryProfit">—</b></div></div></section>
 <section id="ledgerView" class="view"><div class="actions"><button class="primary" id="addExpense">＋ Nova despesa</button><button class="primary" id="addIncome">＋ Entrada do mês</button><button id="deleteRow">Excluir linha</button><button id="hideIncome">Ocultar entrada</button></div><input class="search" id="search" type="search" placeholder="Pesquisar conta (ex.: MER, mercado...)"><div id="ledger"></div><p class="note">Toque em uma linha para selecioná-la. Edite os campos diretamente. O acumulado é recalculado automaticamente.</p></section>
@@ -206,7 +297,7 @@ document.getElementById('projection').addEventListener('click',e=>{let b=e.targe
 document.getElementById('add12Months').onclick=async()=>{let last=data.months.length?monthKeyFromLabel(data.months[data.months.length-1].label):null;if(!last){alert('Use um nome de mês como Novembro de 2026 para gerar os próximos meses.');return}let y=last.year,m=last.month,added=0;for(let i=0;i<12;i++){m++;if(m>12){m=1;y++}let key=y+'-'+String(m).padStart(2,'0');if(data.months.some(x=>x.key===key))continue;data.months.push({id:uid(),key,label:labelFromDate(y,m),income:0,rows:[]});added++}if(!added){alert('Os próximos 12 meses já estão cadastrados.');return}await save()};
 document.getElementById('monthFilter').onchange=render;document.getElementById('search').oninput=render;
 document.querySelectorAll('.nav-item').forEach(btn=>btn.onclick=()=>{document.querySelectorAll('.nav-item').forEach(x=>x.classList.toggle('active',x===btn));document.querySelectorAll('.view').forEach(v=>v.classList.toggle('hide',v.id!==btn.dataset.view));window.scrollTo({top:0,behavior:'smooth'})});
-const applyTheme=t=>{document.body.dataset.theme=t;document.getElementById('themeToggle').textContent=t==='dark'?'☀️':'🌙';document.querySelector('meta[name="theme-color"]').content=t==='dark'?'#0d1421':'#111827';localStorage.setItem('meu-controle-theme',t)};applyTheme(localStorage.getItem('meu-controle-theme')||'light');document.getElementById('themeToggle').onclick=()=>applyTheme(document.body.dataset.theme==='dark'?'light':'dark');
+const applyTheme=t=>{document.body.dataset.theme=t;document.getElementById('themeToggle').textContent=t==='dark'?'☀️':'🌙';document.querySelector('meta[name="theme-color"]').content=t==='dark'?'#101b27':'#183746';localStorage.setItem('meu-controle-theme',t)};applyTheme(localStorage.getItem('meu-controle-theme')||'light');document.getElementById('themeToggle').onclick=()=>applyTheme(document.body.dataset.theme==='dark'?'light':'dark');
 let installPrompt=null;const installButton=document.getElementById('installApp');window.addEventListener('beforeinstallprompt',e=>{e.preventDefault();installPrompt=e;installButton.hidden=false});installButton.onclick=async()=>{if(!installPrompt){alert('Para instalar: abra este link no Chrome, toque no menu ⋮ e escolha “Instalar app” ou “Adicionar à tela inicial”.');return}installPrompt.prompt();await installPrompt.userChoice;installPrompt=null;installButton.hidden=true};window.addEventListener('appinstalled',()=>{installButton.hidden=true;installPrompt=null});document.getElementById('addExpense').onclick=()=>openEntry('expense');document.getElementById('addIncome').onclick=()=>openEntry('income');
 document.getElementById('hideIncome').onclick=e=>{hideIncome=!hideIncome;e.target.textContent=hideIncome?'Mostrar entrada':'Ocultar entrada';document.querySelectorAll('.month-total').forEach(x=>{if(x.textContent.includes('ENTRADA'))x.classList.toggle('hide',hideIncome)});render()};
 document.getElementById('ledger').addEventListener('click',e=>{let tr=e.target.closest('tr[data-row]');if(!tr)return;selected={month:tr.dataset.month,row:tr.dataset.row};document.querySelectorAll('tr[data-row]').forEach(x=>x.classList.toggle('selected',x===tr))});
