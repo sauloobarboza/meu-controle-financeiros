@@ -11,7 +11,7 @@
 <script>
 const DB='meu-controle-financeiro',STORE='appState',KEY='meu-controle-financeiro-v1';let db,data,selected=null,hideIncome=false,mode='expense';
 const uid=()=>Math.random().toString(36).slice(2,10),brl=n=>new Intl.NumberFormat('pt-BR',{style:'currency',currency:'BRL'}).format(Number(n)||0),fmt=n=>Number(n||0).toLocaleString('pt-BR',{minimumFractionDigits:2,maximumFractionDigits:2});
-function money(v){let s=String(v||'').trim().replace(/[R$\s]/g,'');if(!s)return 0;if(s.includes(','))s=s.replace(/\\./g,'').replace(',','.');let n=Number(s);return Number.isFinite(n)?n:0}
+function money(v){let s=String(v||'').trim().replace(/[R$\s]/g,'');if(!s)return 0;if(s.includes(','))s=s.replace(/\./g,'').replace(',','.');let n=Number(s);return Number.isFinite(n)?n:0}
 function esc(s){return String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
 function defaultData(){let d=new Date(),key=d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0');return{initial:0,months:[{id:uid(),key,label:new Date(d.getFullYear(),d.getMonth(),1).toLocaleDateString('pt-BR',{month:'long',year:'numeric'}),rows:[]}]}}
 function openDB(){return new Promise((res,rej)=>{let r=indexedDB.open(DB,1);r.onupgradeneeded=()=>r.result.createObjectStore(STORE,{keyPath:'id'});r.onsuccess=()=>res(r.result);r.onerror=()=>rej(r.error)})}
