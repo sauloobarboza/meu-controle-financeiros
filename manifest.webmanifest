@@ -1,12 +1,12 @@
 {
   "name": "Meu Controle Financeiro",
   "short_name": "Meu Controle",
-  "description": "Controle financeiro pessoal simples",
+  "description": "Seu controle financeiro pessoal, com projeção mensal e acesso rápido.",
   "lang": "pt-BR",
   "start_url": "./",
   "scope": "./",
   "display": "standalone",
-  "background_color": "#f4f6fa",
+  "background_color": "#f3f6fc",
   "theme_color": "#111827",
   "icons": [
     {
@@ -15,5 +15,6 @@
       "type": "image/svg+xml",
       "purpose": "any maskable"
     }
-  ]
+  ],
+  "orientation": "portrait"
 }
