@@ -78,6 +78,103 @@ td.paid-cell{text-align:center;padding:4px 2px}
 td input.paid-check{appearance:auto;-webkit-appearance:checkbox;width:19px;height:19px;min-height:19px;padding:0;margin:0;accent-color:#16834b;vertical-align:middle;cursor:pointer}
 body[data-theme="dark"] td input.paid-check{accent-color:#64dfa0;background:transparent;border:0}
 body[data-theme="dark"] .month-warning{color:#ffc17a}
+
+/* === FINTECH VISUAL SYSTEM: MIDNIGHT + MINT === */
+:root{
+ --bg:#f3f6f5;--ink:#172522;--muted:#72817d;--line:#e2eae6;
+ --card:#ffffff;--soft:#f3f7f5;--month:#eaf4ef;--monthline:#d6e8df;
+ --blue:#167c68;--green:#087f5b;--red:#c65c5c;
+ --accent:#168b72;--accent-soft:#e4f5ef;--shadow:0 12px 34px rgba(24,55,45,.07);
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{font-family:Inter,ui-sans-serif,system-ui,-apple-system,"Segoe UI",sans-serif;letter-spacing:-.012em;background:var(--bg);color:var(--ink);transition:background .25s,color .25s}
+body::before{content:"";position:fixed;inset:0;pointer-events:none;z-index:-1;background:radial-gradient(ellipse at 10% 0%,rgba(52,169,137,.10),transparent 34%),radial-gradient(ellipse at 100% 22%,rgba(118,145,211,.07),transparent 30%)}
+body[data-theme="dark"]{
+ --bg:#0b1220;--ink:#edf5f1;--muted:#9aaea8;--line:#283849;
+ --card:#141f30;--soft:#1b2a3d;--month:#1b2b3b;--monthline:#304a59;
+ --blue:#8be2c0;--green:#8be2b8;--red:#ff9292;
+ --accent:#82dfba;--accent-soft:#1c3a36;--shadow:0 14px 38px rgba(0,0,0,.22);
+}
+body[data-theme="dark"]::before{background:radial-gradient(ellipse at 5% 0%,rgba(39,157,126,.14),transparent 35%),radial-gradient(ellipse at 100% 16%,rgba(91,115,178,.12),transparent 32%)}
+header{position:relative;overflow:hidden;padding:21px 18px 25px;border-radius:0 0 27px 27px;background:linear-gradient(120deg,#123c36 0%,#155b50 52%,#254b60 100%);box-shadow:0 12px 30px rgba(13,66,54,.20)}
+header::after{content:"";position:absolute;width:190px;height:190px;right:-65px;top:-95px;border:1px solid rgba(255,255,255,.14);border-radius:50%;box-shadow:0 0 0 24px rgba(255,255,255,.035),0 0 0 48px rgba(255,255,255,.025);pointer-events:none}
+.header-inner{position:relative;z-index:1;max-width:900px;margin:auto}
+header h1{font-size:21px;letter-spacing:-.045em;font-weight:760}
+header small{display:block;margin-top:3px;color:rgba(239,255,248,.72);font-size:12px;letter-spacing:.015em}
+.header-tools{gap:9px}
+.theme-toggle,.install-button{border:1px solid rgba(255,255,255,.20)!important;background:rgba(255,255,255,.12)!important;color:#f2fff9!important;backdrop-filter:blur(12px);border-radius:14px!important;box-shadow:none!important}
+.theme-toggle{width:43px;min-width:43px;height:43px;padding:0;font-size:17px}
+.install-button{font-size:12px!important;padding:8px 12px!important}
+main{max-width:900px;margin:18px auto 0;padding:0 14px calc(112px + env(safe-area-inset-bottom))}
+.card{background:var(--card);border:1px solid var(--line);border-radius:22px;padding:17px;margin-bottom:14px;box-shadow:var(--shadow)}
+.top-summary{position:relative;overflow:hidden;padding:19px 17px 15px}
+.top-summary::before{content:"";position:absolute;right:-44px;top:-68px;width:165px;height:165px;border-radius:50%;background:var(--accent-soft);opacity:.85}
+.top-summary>*{position:relative}
+.muted,.projection-help{color:var(--muted)}
+.projected-label{font-size:11px;font-weight:650;letter-spacing:.055em;text-transform:uppercase}
+.balance{font-size:clamp(30px,8vw,38px);letter-spacing:-.055em;font-weight:820;line-height:1.15;margin:7px 0 16px;font-variant-numeric:tabular-nums}
+.filters{gap:9px}
+input,select,button{font-family:inherit;border-radius:13px;border:1px solid var(--line);background:var(--card);color:var(--ink);min-height:45px}
+.filters select{background:var(--soft);border-color:transparent;font-weight:650}
+.filters button{background:var(--soft);border-color:var(--line);font-size:13px}
+.monthly-metrics{gap:9px;margin-top:17px;padding-top:14px;border-top:1px solid var(--line)}
+.monthly-metrics>div{padding:9px 10px;border-radius:13px;background:var(--soft)}
+.monthly-metrics span{font-size:10px;font-weight:700;letter-spacing:.045em;text-transform:uppercase;color:var(--muted)}
+.monthly-metrics b{font-size:clamp(12px,3.3vw,15px);letter-spacing:-.025em;font-weight:780;font-variant-numeric:tabular-nums}
+.result-metric.positive b{color:var(--green)}
+.result-metric.negative b{color:var(--red)}
+.actions{gap:8px;margin:15px 0 10px}
+.actions button{font-size:12px;font-weight:700;min-height:44px;padding:8px 10px;border-radius:14px}
+.primary{background:linear-gradient(135deg,#16866e,#116b5b);color:#fff;border:0;box-shadow:0 5px 13px rgba(20,124,99,.18)}
+body[data-theme="dark"] .primary{background:linear-gradient(135deg,#247e69,#1b665e);color:#f4fff9;box-shadow:0 5px 16px rgba(0,0,0,.2)}
+.actions button:not(.primary){background:var(--card);color:var(--muted);border-color:var(--line)}
+.search{margin:7px 0 13px;padding:0 15px;border-radius:14px;background:var(--card);border-color:var(--line);box-shadow:0 3px 12px rgba(15,40,33,.035);font-size:13px}
+.search::placeholder{color:var(--muted)}
+.month-heading-row{margin:18px 0 8px;gap:8px}
+.month-head{padding:12px 11px;margin:0;gap:6px;background:var(--month);border:1px solid var(--monthline);border-radius:16px}
+.month-name{font-size:11px;letter-spacing:.035em;color:var(--ink);font-weight:800}
+.month-total{font-size:9px;letter-spacing:.055em;font-weight:750;color:var(--muted)}
+.month-total b{font-size:12px;color:var(--ink);font-weight:780;margin-top:3px;font-variant-numeric:tabular-nums}
+.month-total input{background:var(--card);border:1px solid var(--line);border-radius:8px;color:var(--ink);font-size:12px;font-weight:750}
+.month-warning{width:25px;height:25px;flex-basis:25px;border-radius:9px;background:#fff0e9;color:#bd5c3a;border:1px solid #f4d3c6;box-shadow:none}
+body[data-theme="dark"] .month-warning{background:#422a2b;color:#ffb1a2;border-color:#694044}
+.wrap,.projection-scroll{background:var(--card);border:1px solid var(--line);border-radius:16px;box-shadow:0 4px 16px rgba(18,48,38,.035)}
+table{border-collapse:separate;border-spacing:0}
+th{background:var(--soft);color:var(--muted);font-size:9px;font-weight:780;letter-spacing:.065em;padding:11px 6px}
+td{border-top:1px solid var(--line);padding:7px 5px}
+td input{font-size:12px;border-color:transparent;background:transparent;border-radius:9px;padding:7px 4px}
+td input:focus{background:var(--soft);border-color:var(--monthline)}
+td.acc{font-size:11px;color:var(--muted);font-weight:720;font-variant-numeric:tabular-nums}
+td.money input{text-align:right;font-weight:650;font-variant-numeric:tabular-nums}
+tr.selected{background:var(--accent-soft);outline:1px solid rgba(36,155,119,.25);outline-offset:-1px}
+.initial{background:var(--soft);font-weight:700}
+td.paid-cell input.paid-check{accent-color:#15966f;width:19px;height:19px}
+.note{font-size:11px;color:var(--muted);padding:0 4px;line-height:1.5}
+.projection h2{font-size:16px;font-weight:780;letter-spacing:-.03em;margin:0 0 5px}
+.projection-help{font-size:11px;line-height:1.5}
+.projection th,.projection td{font-size:10px;padding:10px 6px}
+.projection button{color:var(--accent);font-weight:750}
+.projection .projection-total{background:var(--soft)}
+.projection .negative{color:var(--red)}
+.bottom-nav{position:fixed;z-index:20;bottom:calc(12px + env(safe-area-inset-bottom));left:50%;transform:translateX(-50%);width:min(420px,calc(100% - 28px));padding:7px;gap:7px;border:1px solid rgba(150,170,160,.22);border-radius:20px;background:rgba(255,255,255,.88);box-shadow:0 12px 38px rgba(15,38,31,.16);backdrop-filter:blur(18px)}
+body[data-theme="dark"] .bottom-nav{background:rgba(20,31,48,.90);border-color:#314254;box-shadow:0 12px 38px rgba(0,0,0,.38)}
+.nav-item{flex:1;max-width:none;min-height:46px;border-radius:14px;background:transparent;color:var(--muted);font-size:17px;gap:8px}
+.nav-item span{font-size:12px;font-weight:700}
+.nav-item.active{background:var(--accent-soft);color:var(--accent)}
+dialog{background:var(--card);color:var(--ink);border:1px solid var(--line);border-radius:22px;box-shadow:0 24px 70px rgba(0,0,0,.25)}
+dialog h3{font-size:18px;letter-spacing:-.03em}
+.field span{font-weight:700;color:var(--muted)}
+.field input,.field select{background:var(--soft);border-color:var(--line)}
+.modal-actions button{border-radius:13px}
+input:focus-visible,select:focus-visible,button:focus-visible{outline:3px solid rgba(44,170,132,.28);outline-offset:2px}
+button{transition:transform .18s ease,filter .18s ease,box-shadow .18s ease,background .18s ease}
+button:active{transform:scale(.975)}
+.primary:hover{filter:brightness(1.06);box-shadow:0 7px 18px rgba(20,124,99,.22)}
+.month-heading-row,.wrap,.card{animation:soft-rise .32s cubic-bezier(.2,.7,.2,1) both}
+@keyframes soft-rise{from{opacity:0;transform:translateY(7px)}to{opacity:1;transform:translateY(0)}}
+@media(min-width:650px){main{padding-left:18px;padding-right:18px}.card{padding:20px}.top-summary{padding:22px}.month-head{padding:14px}.actions button{font-size:13px}}
+@media(prefers-reduced-motion:reduce){*,*::before,*::after{animation-duration:.01ms!important;transition-duration:.01ms!important;scroll-behavior:auto!important}}
 </style></head><body><header><div class="header-inner"><div><h1>Meu Controle</h1><small>Controle financeiro do seu jeito</small></div><div class="header-tools"><button id="installApp" class="install-button" hidden>＋ Instalar app</button><button id="themeToggle" class="theme-toggle" aria-label="Alternar tema">🌙</button></div></div></header><main>
 <section class="card top-summary"><div class="muted projected-label">Saldo projetado ao fim do mês selecionado</div><div class="balance projected-balance" id="monthBalance">R$ 0,00</div><div class="filters"><select id="monthFilter" aria-label="Filtrar mês"></select><button id="newMonth">＋ Mês</button></div><div class="monthly-metrics"><div><span>Entrada</span><b id="summaryIncome">R$ 0,00</b></div><div><span>Gasto</span><b id="summarySpent">R$ 0,00</b></div><div class="result-metric" id="resultMetric"><span>Lucro</span><b id="summaryProfit">—</b></div></div></section>
 <section id="ledgerView" class="view"><div class="actions"><button class="primary" id="addExpense">＋ Nova despesa</button><button class="primary" id="addIncome">＋ Entrada do mês</button><button id="deleteRow">Excluir linha</button><button id="hideIncome">Ocultar entrada</button></div><input class="search" id="search" type="search" placeholder="Pesquisar conta (ex.: MER, mercado...)"><div id="ledger"></div><p class="note">Toque em uma linha para selecioná-la. Edite os campos diretamente. O acumulado é recalculado automaticamente.</p></section>
