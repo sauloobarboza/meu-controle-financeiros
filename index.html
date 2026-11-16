@@ -367,6 +367,10 @@ body:not([data-theme="dark"]) select:focus-visible{
  outline:3px solid rgba(0,140,149,.23);outline-offset:2px;
 }
 
+
+/* Tema claro: ocultar saldo projetado, como no tema escuro */
+body:not([data-theme="dark"]) .projected-label,
+body:not([data-theme="dark"]) .projected-balance{display:none!important}
 </style></head><body><header><div class="header-inner"><div><h1>Meu Controle</h1><small>Controle financeiro do seu jeito</small></div><div class="header-tools"><button id="installApp" class="install-button" hidden>＋ Instalar app</button><button id="themeToggle" class="theme-toggle" aria-label="Alternar tema">🌙</button></div></div></header><main>
 <section class="card top-summary"><div class="muted projected-label">Saldo projetado ao fim do mês selecionado</div><div class="balance projected-balance" id="monthBalance">R$ 0,00</div><div class="filters"><select id="monthFilter" aria-label="Filtrar mês"></select><button id="newMonth">＋ Mês</button></div><div class="monthly-metrics"><div><span>Entrada</span><b id="summaryIncome">R$ 0,00</b></div><div><span>Gasto</span><b id="summarySpent">R$ 0,00</b></div><div class="result-metric" id="resultMetric"><span>Lucro</span><b id="summaryProfit">—</b></div></div></section>
 <section id="ledgerView" class="view"><div class="actions"><button class="primary" id="addExpense">＋ Nova despesa</button><button class="primary" id="addIncome">＋ Entrada do mês</button><button id="deleteRow">Excluir linha</button><button id="hideIncome">Ocultar entrada</button></div><input class="search" id="search" type="search" placeholder="Pesquisar conta (ex.: MER, mercado...)"><div id="ledger"></div><p class="note">Toque em uma linha para selecioná-la. Edite os campos diretamente. O acumulado é recalculado automaticamente.</p></section>
