@@ -76,6 +76,40 @@ const uid=()=>Math.random().toString(36).slice(2,10),brl=n=>new Intl.NumberForma
 function money(v){let s=String(v||'').trim().replace(/[R$\s]/g,'');if(!s)return 0;if(s.includes(','))s=s.replace(/\./g,'').replace(',','.');let n=Number(s);return Number.isFinite(n)?n:0}
 function esc(s){return String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
 function defaultData(){return{initial:2500,months:[{id:'demo-nov-2026',key:'2026-11',label:'Novembro de 2026',income:5000,rows:[{id:uid(),name:'Aluguel',expense:1200},{id:uid(),name:'Mercado',expense:850},{id:uid(),name:'Internet',expense:160},{id:uid(),name:'Água',expense:90}]},{id:'demo-dec-2026',key:'2026-12',label:'Dezembro de 2026',income:4800,rows:[{id:uid(),name:'Aluguel',expense:1450},{id:uid(),name:'Mercado',expense:900},{id:uid(),name:'Internet',expense:180},{id:uid(),name:'Água',expense:120}]}]}}
+
+const AURORA_IMPORT_VERSION='aurora-nov2026-dez2027-v1';
+function auroraData(){
+ const makeRows=(ym,items)=>items.map(([day,name,category,value,paid=false])=>({id:uid(),name:day+'/'+ym.slice(5)+' • '+name,category,date:ym+'-'+String(day).padStart(2,'0'),expense:value,paid}));
+ const makeMonth=(year,month,incomes,items)=>{const key=year+'-'+String(month).padStart(2,'0'),ym=key;return{id:'aurora-'+key,key,label:labelFromDate(year,month),income:incomes.reduce((s,x)=>s+x.value,0),incomeItems:incomes.map(x=>({date:key+'-'+String(x.day).padStart(2,'0'),name:x.name,value:x.value})),rows:makeRows(ym,items)}};
+ const recurring=(cardSaulo=0,market=0)=>[
+ [1,'Nubank Empréstimo','Financeiro',211],[10,'Internet','Internet',100],[10,'Luz','Moradia',240],[10,'Mercado Pago','Cartão de crédito',market],
+ [14,'Nubank Amanda','Cartão de crédito',0],[15,'Salário (dia 15)','Salário',0],[16,'Emp. Merc. Pag.','Financeiro',131],
+ [20,'Aluguel','Aluguel',1430],[22,'Nubank Saulo','Cartão de crédito',cardSaulo],[22,'Seguro','Transporte',139.90],
+ [23,'Água','Moradia',56],[25,'Gás','Moradia',60]
+ ];
+ const months=[];
+ months.push(makeMonth(2026,11,[{day:15,name:'Salário (dia 15)',value:1519}],[
+ [10,'Internet','Internet',100],[10,'Luz','Moradia',240],[10,'Mercado Pago','Cartão de crédito',0],
+ [20,'Aluguel','Aluguel',1430],[22,'Nubank Saulo','Cartão',189.90,true],[22,'Seguro','Transporte',139.90],
+ [23,'Água','Moradia',56],[25,'Mercado Pago','Cartão',129.90,true],[25,'Gás','Moradia',60]
+ ]));
+ months.push(makeMonth(2026,12,[{day:1,name:'Salário (dia 1)',value:3800},{day:1,name:'13º salário - 1ª parcela',value:1800},{day:15,name:'Salário (dia 15)',value:1519}],[
+ [1,'Nubank Empréstimo','Financeiro',211],[10,'Internet','Internet',100],[10,'Luz','Moradia',240],[10,'Mercado Pago','Cartão de crédito',2990],
+ [14,'Nubank Amanda','Cartão de crédito',0],[16,'Emp. Merc. Pag.','Financeiro',131],[20,'Aluguel','Aluguel',1430],
+ [22,'Nubank Saulo','Cartão de crédito',1148],[22,'Seguro','Transporte',139.90],[23,'Água','Moradia',56],[25,'Gás','Moradia',60]
+ ]));
+ months.push(makeMonth(2027,1,[{day:1,name:'Salário (dia 1)',value:3800},{day:1,name:'Entrada adicional de janeiro',value:1519},{day:15,name:'Salário (dia 15)',value:1519}],[
+ [1,'Nubank Empréstimo','Financeiro',211],[10,'Internet','Internet',100],[10,'Luz','Moradia',240],[10,'Mercado Pago','Cartão de crédito',1990],
+ [14,'Nubank Amanda','Cartão de crédito',0],[16,'Emp. Merc. Pag.','Financeiro',131],[20,'Aluguel','Aluguel',1430],
+ [22,'Nubank Saulo','Cartão de crédito',1099],[22,'Seguro','Transporte',139.90],[23,'Água','Moradia',56],[25,'Gás','Moradia',60]
+ ]));
+ months.push(makeMonth(2027,2,[{day:1,name:'Salário (dia 1)',value:3800},{day:15,name:'Salário (dia 15)',value:1519}],recurring(744,0).filter(x=>x[1]!=='Salário (dia 15)')));
+ months.push(makeMonth(2027,3,[{day:1,name:'Salário (dia 1)',value:3800},{day:15,name:'Salário (dia 15)',value:1519}],recurring(0,0).filter(x=>x[1]!=='Salário (dia 15)')));
+ for(let m=4;m<=11;m++)months.push(makeMonth(2027,m,[{day:1,name:'Salário (dia 1)',value:3800},{day:15,name:'Salário (dia 15)',value:1519}],recurring(0,0).filter(x=>x[1]!=='Salário (dia 15)')));
+ months.push(makeMonth(2027,12,[{day:1,name:'Salário (dia 1)',value:3800},{day:15,name:'Salário (dia 15)',value:1519}],recurring(0,0).filter(x=>x[1]!=='Salário (dia 15)'&&x[1]!=='Nubank Empréstimo')));
+ return{initial:2513,months,importVersion:AURORA_IMPORT_VERSION};
+}
+
 function openDB(){return new Promise((res,rej)=>{let r=indexedDB.open(DB,1);r.onupgradeneeded=()=>r.result.createObjectStore(STORE,{keyPath:'id'});r.onsuccess=()=>res(r.result);r.onerror=()=>rej(r.error)})}
 function load(){return new Promise((res,rej)=>{let r=db.transaction(STORE).objectStore(STORE).get('main');r.onsuccess=()=>res(r.result?.value||null);r.onerror=()=>rej(r.error)})}
 function persist(){return new Promise((res,rej)=>{let tx=db.transaction(STORE,'readwrite');tx.objectStore(STORE).put({id:'main',value:data,updatedAt:new Date().toISOString()});tx.oncomplete=res;tx.onerror=()=>rej(tx.error)})}
@@ -104,6 +138,6 @@ document.getElementById('entryForm').onsubmit=async e=>{e.preventDefault();let m
 document.getElementById('deleteRow').onclick=async()=>{if(!selected||selected.row==='initial'){alert('Selecione uma linha para excluir.');return}let m=month(selected.month),i=m.rows.findIndex(r=>r.id===selected.row);if(i>=0&&confirm('Excluir '+m.rows[i].name+'?')){m.rows.splice(i,1);selected=null;await save()}};
 document.getElementById('cancelEntry').onclick=()=>document.getElementById('entryDialog').close();document.getElementById('newMonth').onclick=()=>document.getElementById('monthDialog').showModal();document.getElementById('cancelMonth').onclick=()=>document.getElementById('monthDialog').close();
 document.getElementById('monthForm').onsubmit=async e=>{e.preventDefault();let label=document.getElementById('monthName').value.trim(),parsed=monthKeyFromLabel(label);if(!parsed){alert('Informe o mês e o ano. Exemplo: Janeiro de 2027.');return}let key=parsed.year+'-'+String(parsed.month).padStart(2,'0');if(data.months.some(m=>m.key===key)){alert('Esse mês já está cadastrado.');return}let id=uid();data.months.push({id,key,label:labelFromDate(parsed.year,parsed.month),income:0,rows:[]});sortMonths();document.getElementById('monthDialog').close();document.getElementById('monthName').value='';document.getElementById('monthFilter').value=id;await save()};
-(async()=>{try{db=await openDB();let old=await load();if(old){data=old;data.months.forEach(m=>{if(typeof m.income!=='number'){m.income=(m.rows||[]).reduce((s,r)=>s+(Number(r.income)||0),0);(m.rows||[]).forEach(r=>r.income=0)}(m.rows||[]).forEach(r=>{if(typeof r.paid!=='boolean')r.paid=false})});let empty=(Number(data.initial)||0)===0&&data.months.length===1&&data.months[0].rows.length===0&&(Number(data.months[0].income)||0)===0;if(empty)data=defaultData();await persist()}else{try{let legacy=JSON.parse(localStorage.getItem(KEY));if(legacy){data=legacy;data.months.forEach(m=>{m.income=(m.rows||[]).reduce((s,r)=>s+(Number(r.income)||0),0);(m.rows||[]).forEach(r=>{r.income=0;r.paid=!!r.paid})});localStorage.removeItem(KEY)}}catch{}data=data||defaultData();data.months.forEach(m=>(m.rows||[]).forEach(r=>{if(typeof r.paid!=='boolean')r.paid=false}));await persist()}render()}catch(err){console.error(err);document.getElementById('ledger').textContent='Não foi possível abrir o IndexedDB. Use o endereço HTTPS do GitHub Pages.'}})();
+(async()=>{try{db=await openDB();let old=await load();if(old){data=old;data.months.forEach(m=>{if(typeof m.income!=='number'){m.income=(m.rows||[]).reduce((s,r)=>s+(Number(r.income)||0),0);(m.rows||[]).forEach(r=>r.income=0)}(m.rows||[]).forEach(r=>{if(typeof r.paid!=='boolean')r.paid=false})});let empty=(Number(data.initial)||0)===0&&data.months.length===1&&data.months[0].rows.length===0&&(Number(data.months[0].income)||0)===0;if(empty)data=defaultData();await persist()}else{try{let legacy=JSON.parse(localStorage.getItem(KEY));if(legacy){data=legacy;data.months.forEach(m=>{m.income=(m.rows||[]).reduce((s,r)=>s+(Number(r.income)||0),0);(m.rows||[]).forEach(r=>{r.income=0;r.paid=!!r.paid})});localStorage.removeItem(KEY)}}catch{}data=data||defaultData();data.months.forEach(m=>(m.rows||[]).forEach(r=>{if(typeof r.paid!=='boolean')r.paid=false}));await persist()}if(data.importVersion!==AURORA_IMPORT_VERSION){data=auroraData();await persist()}render()}catch(err){console.error(err);document.getElementById('ledger').textContent='Não foi possível abrir o IndexedDB. Use o endereço HTTPS do GitHub Pages.'}})();
 if('serviceWorker'in navigator&&location.protocol.startsWith('http'))addEventListener('load',()=>navigator.serviceWorker.register('./sw.js').catch(console.error));
 </script></body></html>
