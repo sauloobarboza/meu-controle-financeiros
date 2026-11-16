@@ -77,36 +77,30 @@ function money(v){let s=String(v||'').trim().replace(/[R$\s]/g,'');if(!s)return 
 function esc(s){return String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
 function defaultData(){return{initial:2500,months:[{id:'demo-nov-2026',key:'2026-11',label:'Novembro de 2026',income:5000,rows:[{id:uid(),name:'Aluguel',expense:1200},{id:uid(),name:'Mercado',expense:850},{id:uid(),name:'Internet',expense:160},{id:uid(),name:'Água',expense:90}]},{id:'demo-dec-2026',key:'2026-12',label:'Dezembro de 2026',income:4800,rows:[{id:uid(),name:'Aluguel',expense:1450},{id:uid(),name:'Mercado',expense:900},{id:uid(),name:'Internet',expense:180},{id:uid(),name:'Água',expense:120}]}]}}
 
-const AURORA_IMPORT_VERSION='aurora-nov2026-dez2027-v1';
+
+const AURORA_IMPORT_VERSION='base-fixa-nov2026-jun2027-v2';
 function auroraData(){
- const makeRows=(ym,items)=>items.map(([day,name,category,value,paid=false])=>({id:uid(),name:day+'/'+ym.slice(5)+' • '+name,category,date:ym+'-'+String(day).padStart(2,'0'),expense:value,paid}));
- const makeMonth=(year,month,incomes,items)=>{const key=year+'-'+String(month).padStart(2,'0'),ym=key;return{id:'aurora-'+key,key,label:labelFromDate(year,month),income:incomes.reduce((s,x)=>s+x.value,0),incomeItems:incomes.map(x=>({date:key+'-'+String(x.day).padStart(2,'0'),name:x.name,value:x.value})),rows:makeRows(ym,items)}};
- const recurring=(cardSaulo=0,market=0)=>[
- [1,'Nubank Empréstimo','Financeiro',211],[10,'Internet','Internet',100],[10,'Luz','Moradia',240],[10,'Mercado Pago','Cartão de crédito',market],
- [14,'Nubank Amanda','Cartão de crédito',0],[15,'Salário (dia 15)','Salário',0],[16,'Emp. Merc. Pag.','Financeiro',131],
- [20,'Aluguel','Aluguel',1430],[22,'Nubank Saulo','Cartão de crédito',cardSaulo],[22,'Seguro','Transporte',139.90],
- [23,'Água','Moradia',56],[25,'Gás','Moradia',60]
- ];
  const months=[];
- months.push(makeMonth(2026,11,[{day:15,name:'Salário (dia 15)',value:1519}],[
- [10,'Internet','Internet',100],[10,'Luz','Moradia',240],[10,'Mercado Pago','Cartão de crédito',0],
- [20,'Aluguel','Aluguel',1430],[22,'Nubank Saulo','Cartão',189.90,true],[22,'Seguro','Transporte',139.90],
- [23,'Água','Moradia',56],[25,'Mercado Pago','Cartão',129.90,true],[25,'Gás','Moradia',60]
- ]));
- months.push(makeMonth(2026,12,[{day:1,name:'Salário (dia 1)',value:3800},{day:1,name:'13º salário - 1ª parcela',value:1800},{day:15,name:'Salário (dia 15)',value:1519}],[
- [1,'Nubank Empréstimo','Financeiro',211],[10,'Internet','Internet',100],[10,'Luz','Moradia',240],[10,'Mercado Pago','Cartão de crédito',2990],
- [14,'Nubank Amanda','Cartão de crédito',0],[16,'Emp. Merc. Pag.','Financeiro',131],[20,'Aluguel','Aluguel',1430],
- [22,'Nubank Saulo','Cartão de crédito',1148],[22,'Seguro','Transporte',139.90],[23,'Água','Moradia',56],[25,'Gás','Moradia',60]
- ]));
- months.push(makeMonth(2027,1,[{day:1,name:'Salário (dia 1)',value:3800},{day:1,name:'Entrada adicional de janeiro',value:1519},{day:15,name:'Salário (dia 15)',value:1519}],[
- [1,'Nubank Empréstimo','Financeiro',211],[10,'Internet','Internet',100],[10,'Luz','Moradia',240],[10,'Mercado Pago','Cartão de crédito',1990],
- [14,'Nubank Amanda','Cartão de crédito',0],[16,'Emp. Merc. Pag.','Financeiro',131],[20,'Aluguel','Aluguel',1430],
- [22,'Nubank Saulo','Cartão de crédito',1099],[22,'Seguro','Transporte',139.90],[23,'Água','Moradia',56],[25,'Gás','Moradia',60]
- ]));
- months.push(makeMonth(2027,2,[{day:1,name:'Salário (dia 1)',value:3800},{day:15,name:'Salário (dia 15)',value:1519}],recurring(744,0).filter(x=>x[1]!=='Salário (dia 15)')));
- months.push(makeMonth(2027,3,[{day:1,name:'Salário (dia 1)',value:3800},{day:15,name:'Salário (dia 15)',value:1519}],recurring(0,0).filter(x=>x[1]!=='Salário (dia 15)')));
- for(let m=4;m<=11;m++)months.push(makeMonth(2027,m,[{day:1,name:'Salário (dia 1)',value:3800},{day:15,name:'Salário (dia 15)',value:1519}],recurring(0,0).filter(x=>x[1]!=='Salário (dia 15)')));
- months.push(makeMonth(2027,12,[{day:1,name:'Salário (dia 1)',value:3800},{day:15,name:'Salário (dia 15)',value:1519}],recurring(0,0).filter(x=>x[1]!=='Salário (dia 15)'&&x[1]!=='Nubank Empréstimo')));
+ const templates=[
+  ['Cartão Nubank',0],['Empréstimo Nubank',211],['Internet',110],['Luz',240],
+  ['Cartão MP',0],['Empréstimo Mercado Pago',131],['Aluguel',1430],
+  ['Seguro',139.90],['Água',56],['Gás',60]
+ ];
+ for(let y=2026,m=11;y<2027||(y===2027&&m<=6);){
+  const key=y+'-'+String(m).padStart(2,'0');
+  const days=[22,1,10,10,14,16,20,22,23,25];
+  const rows=templates.map(([name,value],i)=>({
+   id:uid(),name,expense:value,paid:false,category:
+    i===0||i===4?'Cartão de crédito':
+    i===1||i===5?'Empréstimos':
+    i===2?'Internet':
+    i===3||i===8||i===9?'Moradia':
+    i===6?'Aluguel':'Transporte',
+   date:key+'-'+String(days[i]).padStart(2,'0')
+  }));
+  months.push({id:'base-'+key,key,label:labelFromDate(y,m),income:0,rows});
+  m++;if(m===13){m=1;y++}
+ }
  return{initial:2513,months,importVersion:AURORA_IMPORT_VERSION};
 }
 
